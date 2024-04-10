@@ -20,10 +20,8 @@ public class QRCodeController {
             @RequestParam(defaultValue = "QR_Code") String fileName,
             HttpServletResponse response) throws IOException {
 
-        // Generate QR code based on URL parameter
         QRCode qrCode = QRCode.from(url);
 
-        // Set image type (default is PNG)
         if ("jpg".equalsIgnoreCase(imageType)) {
             qrCode.to(ImageType.JPG);
         } else if ("gif".equalsIgnoreCase(imageType)) {
@@ -32,7 +30,6 @@ public class QRCodeController {
             qrCode.to(ImageType.PNG);
         }
 
-        // Write QR code to response
         response.setContentType("image/" + imageType);
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "." + imageType + "\"");
         qrCode.writeTo(response.getOutputStream());
